@@ -1,9 +1,5 @@
 package commands
 
-import (
-	"fmt"
-)
-
 type AddCommand struct {
 	Due         string
 	Tags        string
@@ -11,13 +7,13 @@ type AddCommand struct {
 }
 
 func (add *AddCommand) Run(conf *Configuration) error {
-
+	return nil
 }
 
 func (add *AddCommand) Validate(conf *Configuration) error {
-
+	return nil
 }
 
-func (add *AddCommand) String() string {
-	return fmt.Sprintf("Description: %s\nDue Date: %s\nTags: %v\n", add.Description, add.Due, add.Tags)
+func (add *AddCommand) Parse(conf *Configuration, args []string) error {
+	return nil
 }
