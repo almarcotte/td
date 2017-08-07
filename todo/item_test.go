@@ -97,3 +97,24 @@ func TestItem_RemoveTag(t *testing.T) {
 		t.Fatal("Expecting item to no longer have tag `java` but found.")
 	}
 }
+
+func TestNewItemFromJson(t *testing.T) {
+	json := []byte(`{"id": 5,"description": "Test Item","status": 0,"tags": ["test", "golang"]}`)
+	item, err := NewItemFromJson(json)
+
+	if err != nil {
+		t.Fatalf("Expected no errors, got %s", err.Error())
+	}
+
+	if item.Id != 5 {
+		t.Fatalf("Expected item ID to be 5, got %d", item.Id)
+	}
+
+	if item.Description != "Test Item" {
+		t.Fatalf("Expected item description to be `Test Item`, got %s", item.Description)
+	}
+
+	if !item.HasTag("test") {
+		t.Fatalf("Expected item to have tag `test` but not found, got %+v", item.Tags)
+	}
+}

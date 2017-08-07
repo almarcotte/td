@@ -2,6 +2,7 @@ package todo
 
 import (
 	"time"
+	"encoding/json"
 )
 
 type Status int
@@ -17,7 +18,7 @@ type Item struct {
 	Description string    `json:"description"`
 	Status      Status    `json:"status"`
 	Tags        []string  `json:"tags"`
-	Due         time.Time `json:"due"`
+	Due         time.Time `json:"due,omitempty"`
 }
 
 // ChangeStatus sets the status of the item to the given status. Valid values are Incomplete, InProgress and Completed.
@@ -114,4 +115,17 @@ func (item *Item) SetDueTomorrow() {
 // SetDueNextWeek sets the due date to a week from today. This is mostly a convenience function.
 func (item *Item) SetDueNextWeek() {
 	item.Due = time.Now().AddDate(0, 0, 7)
+}
+
+// NewItemFromJson creates a new Item from the given json
+func NewItemFromJson(data []byte) (*Item, error) {
+	var item Item
+
+	err := json.Unmarshal(data, &item)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &item, nil
 }
