@@ -2,12 +2,13 @@ package commands
 
 import (
 	"fmt"
+	"github.com/gnumast/td/todo"
 )
 
 type UsageCommand struct{}
 
 // Run displays the usage instruction
-func (usage *UsageCommand) Run(configuration *Configuration) error {
+func (usage *UsageCommand) Run(configuration *todo.Configuration) error {
 	fmt.Println("Usage:\n  command [arguments]\n  command help")
 
 	fmt.Println()
@@ -37,10 +38,16 @@ func (usage *UsageCommand) Run(configuration *Configuration) error {
 	return nil
 }
 
-func (usage *UsageCommand) Validate(configuration *Configuration) error {
+// Validate validates the data parsed, which makes no sense in this context
+func (usage *UsageCommand) Validate(configuration *todo.Configuration) error {
 	return nil
 }
 
-func (usage *UsageCommand) Parse(configuration *Configuration, args []string) error {
+// Parse parses the arguments, none in this case
+func (usage *UsageCommand) Parse(configuration *todo.Configuration, args []string) error {
 	return nil
+}
+
+func (usage *UsageCommand) Help() string {
+	return ""
 }

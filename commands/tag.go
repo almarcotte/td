@@ -1,19 +1,26 @@
 package commands
 
-import "github.com/gnumast/td/todo"
+import (
+	"errors"
+	"github.com/gnumast/td/todo"
+)
 
 type TagCommand struct {
 	Tags []string
 }
 
-func (c *TagCommand) Validate(configuration *todo.Configuration) error {
-	return nil
+func (tag *TagCommand) Validate(configuration *todo.Configuration) error {
+	return errors.New("Not implemented")
 }
 
-func (c *TagCommand) Parse(configuration *todo.Configuration, args []string) error {
-	return nil
+func (tag *TagCommand) Parse(configuration *todo.Configuration, args []string) error {
+	return errors.New("Not implemented")
 }
 
-func (c *TagCommand) Run(configuration *todo.Configuration) error {
-	return nil
+func (tag *TagCommand) Run(configuration *todo.Configuration) error {
+	return errors.New("Not implemented")
+}
+
+func (tag *TagCommand) Help() string {
+	return ""
 }

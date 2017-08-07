@@ -12,16 +12,20 @@ const (
 
 type VersionCommand struct{}
 
-func (c *VersionCommand) Run(configuration *todo.Configuration) error {
+func (vers *VersionCommand) Run(configuration *todo.Configuration) error {
 	fmt.Printf("td version %s %s/%s\n", VERSION, runtime.GOOS, runtime.GOARCH)
 
 	return nil
 }
 
-func (c *VersionCommand) Parse(configuration *todo.Configuration) error {
+func (vers *VersionCommand) Parse(configuration *todo.Configuration, args []string) error {
 	return nil
 }
 
-func (c *VersionCommand) Validate(configuration *todo.Configuration) error {
+func (vers *VersionCommand) Validate(configuration *todo.Configuration) error {
 	return nil
+}
+
+func (vers *VersionCommand) Help() string {
+	return ""
 }

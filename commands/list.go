@@ -1,17 +1,24 @@
 package commands
 
-import "github.com/gnumast/td/todo"
+import (
+	"github.com/gnumast/td/todo"
+	"errors"
+)
 
 type ListCommand struct{}
 
-func (c *ListCommand) Validate(configuration *todo.Configuration) error {
-	return nil
+func (list *ListCommand) Validate(configuration *todo.Configuration) error {
+	return errors.New("Not implemented")
 }
 
-func (c *ListCommand) Parse(configuration *todo.Configuration, args []string) error {
-	return nil
+func (list *ListCommand) Parse(configuration *todo.Configuration, args []string) error {
+	return errors.New("Not implemented")
 }
 
-func (c *ListCommand) Run(configuration *todo.Configuration) error {
-	return nil
+func (list *ListCommand) Run(configuration *todo.Configuration) error {
+	return errors.New("Not implemented")
+}
+
+func (list *ListCommand) Help() string {
+	return ""
 }
