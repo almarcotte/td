@@ -8,13 +8,28 @@ import (
 )
 
 type Configuration struct {
-	GlobalFile string
+	GlobalFile     string // Location of the global task list
+	CurrentWorkDir string // Path where the program was executed from
 }
 
+// NewConfiguration returns a struct containing settings we want to access across the entire program
 func NewConfiguration() *Configuration {
 	return &Configuration{
-		GlobalFile: globalFileLocation(),
+		GlobalFile:     globalFileLocation(),
+		CurrentWorkDir: getCurrentWorkDir(),
 	}
+}
+
+// getCurrentWorkDir returns the current directory, i.e. where the program was started from. This will be useful when
+// figuring out if we're searching for a local (project) task list
+func getCurrentWorkDir() string {
+	this, err := os.Executable()
+
+	if err != nil {
+		log.Fatalf("Couldn't figure out where I am! Got: %s", err.Error())
+	}
+
+	return filepath.Dir(this)
 }
 
 // globalFileLocation returns the location of the global task list based on the user's home directory or an environment
