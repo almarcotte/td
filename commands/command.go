@@ -7,4 +7,5 @@ type Command interface {
 	Run(*todo.Configuration) error
 	Validate(*todo.Configuration) error
 	Parse(*todo.Configuration, []string) error
+	Help() string
 }
