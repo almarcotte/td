@@ -1,5 +1,7 @@
 package commands
 
+import "github.com/gnumast/td/todo"
+
 const (
 	// All the commands are listing here
 	addCmd      = "a"
@@ -8,6 +10,7 @@ const (
 	revertCmd   = "r"
 	tagCmd      = "t"
 	listCmd     = "ls"
+	versionCmd  = "version"
 )
 
 type Handler struct {
@@ -19,7 +22,7 @@ func NewHandler(args []string) *Handler {
 }
 
 // Run tries to match the provided arguments with a command
-func (h *Handler) Run(conf *Configuration) error {
+func (h *Handler) Run(conf *todo.Configuration) error {
 	var c Command
 
 	c = parseArgsForCommand(h.Args[0])
@@ -54,6 +57,8 @@ func parseArgsForCommand(arg string) Command {
 		return &TagCommand{}
 	case listCmd:
 		return &ListCommand{}
+	case versionCmd:
+		return &VersionCommand{}
 	}
 
 	return &UsageCommand{}

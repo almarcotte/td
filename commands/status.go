@@ -7,14 +7,14 @@ type StatusCommand struct {
 	Status todo.Status
 }
 
-func (c *StatusCommand) Validate(configuration *Configuration) error {
+func (c *StatusCommand) Validate(configuration *todo.Configuration) error {
 	return nil
 }
 
-func (c *StatusCommand) Parse(configuration *Configuration, args []string) error {
+func (c *StatusCommand) Parse(configuration *todo.Configuration, args []string) error {
 	return nil
 }
 
-func (c *StatusCommand) Run(configuration *Configuration) error {
+func (c *StatusCommand) Run(configuration *todo.Configuration) error {
 	return nil
 }
