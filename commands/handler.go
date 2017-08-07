@@ -1,6 +1,8 @@
 package commands
 
-import "github.com/gnumast/td/todo"
+import (
+	"github.com/gnumast/td/todo"
+)
 
 const (
 	// All the commands are listing here
@@ -24,25 +26,27 @@ func NewHandler(args []string) *Handler {
 
 // Run tries to match the provided arguments with a command then asks it to parse / validate the rest of the arguments.
 // Finally the command is executed.
-func (h *Handler) Run(conf *todo.Configuration) error {
+func (h *Handler) Run(conf *todo.Configuration) (output string, err error) {
 	command := ParseForCommand(h.Args[0])
 
 	// Parsing error probably means missing arguments
-	if err := command.Parse(conf, h.Args); err != nil {
+	if err = command.Parse(conf, h.Args); err != nil {
+		output = command.Help()
 
+		return
 	}
 
 	// Validation error means the arguments were received don't make sense, such as removing a task that doesn't
-	if err := command.Validate(conf); err != nil {
-
+	if err = command.Validate(conf); err != nil {
+		return
 	}
 
 	// Something went wrong while executing the command, hopefully this doesn't happen
-	if err := command.Run(conf); err != nil {
-
+	if err = command.Run(conf); err != nil {
+		return
 	}
 
-	return nil
+	return
 }
 
 // parseArgsForCommand receives the first argument passed via the command line and returns the appropriate command

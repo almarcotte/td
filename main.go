@@ -11,8 +11,12 @@ func main() {
 	handler := commands.NewHandler(os.Args)
 	config := todo.NewConfiguration()
 
-	if err := handler.Run(config); err != nil {
+	result, err := handler.Run(config)
+
+	if err != nil {
 		fmt.Printf("Error! %v\n", err)
 		os.Exit(1)
 	}
+
+	fmt.Printf("%s\n", result)
 }
