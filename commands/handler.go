@@ -2,14 +2,12 @@ package commands
 
 const (
 	// All the commands are listing here
-	addCmd     = "a"
-	addDue     = "due"
-	addDueHelp = "The due date for this item. Accepts 'today', 'tomorrow', 'next week' or a datetime in the " +
-		"'dd/mm/yyyy hh:ii:ss format"
-	addTags     = "tag"
-	addTagsHelp = "Comma-separated list of tags to apply to this item."
-
-	usageCmd = ""
+	addCmd      = "a"
+	completeCmd = "c"
+	progressCmd = "p"
+	revertCmd   = "r"
+	tagCmd      = "t"
+	listCmd     = "ls"
 )
 
 type Handler struct {
@@ -24,9 +22,7 @@ func NewHandler(args []string) *Handler {
 func (h *Handler) Run(conf *Configuration) error {
 	var c Command
 
-	if h.Args[0] == usageCmd {
-		c = UsageCommand{}
-	}
+	c = parseArgsForCommand(h.Args[0])
 
 	if err := c.Parse(conf, h.Args); err != nil {
 
@@ -41,4 +37,24 @@ func (h *Handler) Run(conf *Configuration) error {
 	}
 
 	return nil
+}
+
+func parseArgsForCommand(arg string) Command {
+	// This feels a bit messy, maybe there's a better way to do this..?
+	switch arg {
+	case addCmd:
+		return &AddCommand{}
+	case completeCmd:
+		return &StatusCommand{Flag: completeCmd}
+	case progressCmd:
+		return &StatusCommand{Flag: progressCmd}
+	case revertCmd:
+		return &StatusCommand{Flag: revertCmd}
+	case tagCmd:
+		return &TagCommand{}
+	case listCmd:
+		return &ListCommand{}
+	}
+
+	return &UsageCommand{}
 }
