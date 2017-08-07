@@ -1,8 +1,8 @@
 package commands
 
 import (
-	"github.com/gnumast/td/todo"
 	"errors"
+	"github.com/gnumast/td/todo"
 )
 
 type StatusCommand struct {
