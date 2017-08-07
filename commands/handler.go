@@ -1,6 +1,4 @@
-package cli
-
-import cmd "github.com/gnumast/td/commands"
+package commands
 
 const (
 	// All the commands are listing here
@@ -23,11 +21,11 @@ func NewHandler(args []string) *Handler {
 }
 
 // Run tries to match the provided arguments with a command
-func (h *Handler) Run(conf *cmd.Configuration) error {
-	var c cmd.Command
+func (h *Handler) Run(conf *Configuration) error {
+	var c Command
 
 	if h.Args[0] == usageCmd {
-		c = cmd.UsageCommand{}
+		c = UsageCommand{}
 	}
 
 	if err := c.Parse(conf, h.Args); err != nil {

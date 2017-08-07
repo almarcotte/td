@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/gnumast/td/cli"
+	"github.com/gnumast/td/commands"
 	"os"
 )
 
 func main() {
-	handler := cli.NewHandler(os.Args)
-	config := cli.NewConfiguration()
+	handler := commands.NewHandler(os.Args)
+	config := commands.NewConfiguration()
 
 	if err := handler.Run(config); err != nil {
 		fmt.Printf("Error! %v\n", err)
