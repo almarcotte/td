@@ -13,10 +13,11 @@ const (
 )
 
 type Item struct {
-	Description string
-	Status      Status
-	Tags        []string
-	Due         time.Time
+	Id          uint      `json:"id"`
+	Description string    `json:"description"`
+	Status      Status    `json:"status"`
+	Tags        []string  `json:"tags"`
+	Due         time.Time `json:"due"`
 }
 
 // ChangeStatus sets the status of the item to the given status. Valid values are Incomplete, InProgress and Completed.
@@ -68,7 +69,7 @@ func (item *Item) AddTag(tag string) {
 
 // HasTag returns true if the item has the given tag already applied, false otherwise.
 func (item *Item) HasTag(tag string) bool {
-	for i, _ := range item.Tags {
+	for i := range item.Tags {
 		if item.Tags[i] == tag {
 			return true
 		}
@@ -80,6 +81,7 @@ func (item *Item) HasTag(tag string) bool {
 // RemoveTag removes the given tag from the item. If the tag wasn't applied it simply does nothing.
 func (item *Item) RemoveTag(tag string) {
 	tags := item.Tags[:0]
+
 	for _, t := range item.Tags {
 		if t != tag {
 			tags = append(tags, t)
