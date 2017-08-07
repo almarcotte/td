@@ -17,31 +17,35 @@ type Handler struct {
 	Args []string
 }
 
+// NewHandler returns a new command handler
 func NewHandler(args []string) *Handler {
 	return &Handler{Args: args}
 }
 
-// Run tries to match the provided arguments with a command
+// Run tries to match the provided arguments with a command then asks it to parse / validate the rest of the arguments.
+// Finally the command is executed.
 func (h *Handler) Run(conf *todo.Configuration) error {
-	var c Command
+	command := parseArgsForCommand(h.Args[0])
 
-	c = parseArgsForCommand(h.Args[0])
-
-	if err := c.Parse(conf, h.Args); err != nil {
-
-	}
-
-	if err := c.Validate(conf); err != nil {
+	// Parsing error probably means missing arguments
+	if err := command.Parse(conf, h.Args); err != nil {
 
 	}
 
-	if err := c.Run(conf); err != nil {
+	// Validation error means the arguments were received don't make sense, such as removing a task that doesn't
+	if err := command.Validate(conf); err != nil {
+
+	}
+
+	// Something went wrong while executing the command, hopefully this doesn't happen
+	if err := command.Run(conf); err != nil {
 
 	}
 
 	return nil
 }
 
+// parseArgsForCommand receives the first argument passed via the command line and returns the appropriate command
 func parseArgsForCommand(arg string) Command {
 	// This feels a bit messy, maybe there's a better way to do this..?
 	switch arg {
