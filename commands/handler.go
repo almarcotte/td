@@ -25,7 +25,7 @@ func NewHandler(args []string) *Handler {
 // Run tries to match the provided arguments with a command then asks it to parse / validate the rest of the arguments.
 // Finally the command is executed.
 func (h *Handler) Run(conf *todo.Configuration) error {
-	command := parseArgsForCommand(h.Args[0])
+	command := ParseForCommand(h.Args[0])
 
 	// Parsing error probably means missing arguments
 	if err := command.Parse(conf, h.Args); err != nil {
@@ -46,7 +46,7 @@ func (h *Handler) Run(conf *todo.Configuration) error {
 }
 
 // parseArgsForCommand receives the first argument passed via the command line and returns the appropriate command
-func parseArgsForCommand(arg string) Command {
+func ParseForCommand(arg string) Command {
 	// This feels a bit messy, maybe there's a better way to do this..?
 	switch arg {
 	case addCmd:
