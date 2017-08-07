@@ -1,6 +1,7 @@
 package todo
 
 import (
+	"encoding/json"
 	"testing"
 	"time"
 )
@@ -99,8 +100,9 @@ func TestItem_RemoveTag(t *testing.T) {
 }
 
 func TestNewItemFromJson(t *testing.T) {
-	json := []byte(`{"id": 5,"description": "Test Item","status": 0,"tags": ["test", "golang"]}`)
-	item, err := NewItemFromJson(json)
+	data := []byte(`{"id": 5,"description": "Test Item","status": 0,"tags": ["test", "golang"]}`)
+	var item Item
+	err := json.Unmarshal(data, &item)
 
 	if err != nil {
 		t.Fatalf("Expected no errors, got %s", err.Error())
@@ -116,5 +118,33 @@ func TestNewItemFromJson(t *testing.T) {
 
 	if !item.HasTag("test") {
 		t.Fatalf("Expected item to have tag `test` but not found, got %+v", item.Tags)
+	}
+}
+
+func TestNewItemFromJson_NoTags(t *testing.T) {
+	data := []byte(`{"id": 5,"description": "Test Item","status": 0}`)
+	var item Item
+	err := json.Unmarshal(data, &item)
+
+	if err != nil {
+		t.Fatalf("Unexpected Unmarshalling error: %s", err.Error())
+	}
+
+	if item.Tags == nil {
+		t.Fatalf("Expected `Tags` to be an empty slice, got nil")
+	}
+}
+
+func TestItem_ToJson_NoTags(t *testing.T) {
+	item := Item{Id: 1, Description: "Test Item"}
+	expected := string([]byte(`{"id":1,"description":"Test Item","status":0}`))
+	result, err := json.Marshal(item)
+
+	if err != nil {
+		t.Fatalf("Unexpected marshalling error: %s", err.Error())
+	}
+
+	if out := string(result); expected != out {
+		t.Fatalf("Unexpected json\nGot: %s\nExpected: %s\n", out, expected)
 	}
 }

@@ -117,15 +117,62 @@ func (item *Item) SetDueNextWeek() {
 	item.Due = time.Now().AddDate(0, 0, 7)
 }
 
-// NewItemFromJson creates a new Item from the given json
-func NewItemFromJson(data []byte) (*Item, error) {
-	var item Item
+func (item *Item) UnmarshalJSON(data []byte) error {
+	base := struct {
+		Id          uint      `json:"id"`
+		Description string    `json:"description"`
+		Status      Status    `json:"status"`
+		Tags        []string  `json:"tags,omitempty"`
+		Due         time.Time `json:"due,omitempty"`
+	}{}
 
-	err := json.Unmarshal(data, &item)
+	err := json.Unmarshal(data, &base)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return &item, nil
+	item.Id = base.Id
+	item.Description = base.Description
+	item.Status = base.Status
+
+	if base.Tags == nil {
+		item.Tags = []string{}
+	} else {
+		item.Tags = base.Tags
+	}
+
+	if base.Due.IsZero() {
+		item.Due = time.Time{}
+	} else {
+		item.Due = base.Due
+	}
+
+	return nil
+}
+
+func (item Item) MarshalJSON() ([]byte, error) {
+	var due string
+
+	if item.Due.IsZero() {
+		due = ""
+	} else {
+		due = item.Due.Format(time.ANSIC)
+	}
+
+	base := struct {
+		Id          uint     `json:"id"`
+		Description string   `json:"description"`
+		Status      Status   `json:"status"`
+		Tags        []string `json:"tags,omitempty"`
+		Due         string   `json:"due,omitempty"`
+	}{
+		Id:          item.Id,
+		Description: item.Description,
+		Status:      item.Status,
+		Tags:        item.Tags,
+		Due:         due,
+	}
+
+	return json.Marshal(base)
 }

@@ -1,7 +1,5 @@
 package todo
 
-import "encoding/json"
-
 type List struct {
 	Items    []Item `json:"items"`
 	IsGlobal bool   `json:"-"` // Omit from json
@@ -40,17 +38,4 @@ func (l *List) Get(id uint) *Item {
 	}
 
 	return nil
-}
-
-// NewListFromJson returns a list from the given json
-func NewListFromJson(data []byte) (*List, error) {
-	var list List
-
-	err := json.Unmarshal(data, &list)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &list, nil
 }
