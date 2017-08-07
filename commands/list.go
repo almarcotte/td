@@ -19,6 +19,6 @@ func (list *ListCommand) Run(configuration *todo.Configuration) error {
 	return errors.New("Not implemented")
 }
 
-func (list *ListCommand) Help() string {
+func (list ListCommand) Help() string {
 	return ""
 }

@@ -20,6 +20,6 @@ func (find *FindCommand) Parse(conf *todo.Configuration, args []string) error {
 	return errors.New("Not implemented")
 }
 
-func (find *FindCommand) Help() string {
+func (find FindCommand) Help() string {
 	return ""
 }

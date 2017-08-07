@@ -24,6 +24,6 @@ func (add *AddCommand) Parse(conf *todo.Configuration, args []string) error {
 	return errors.New("Not implemented")
 }
 
-func (add *AddCommand) Help() string {
+func (add AddCommand) Help() string {
 	return ""
 }

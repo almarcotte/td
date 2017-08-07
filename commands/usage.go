@@ -39,15 +39,15 @@ func (usage *UsageCommand) Run(configuration *todo.Configuration) error {
 }
 
 // Validate validates the data parsed, which makes no sense in this context
-func (usage *UsageCommand) Validate(configuration *todo.Configuration) error {
+func (usage UsageCommand) Validate(configuration *todo.Configuration) error {
 	return nil
 }
 
 // Parse parses the arguments, none in this case
-func (usage *UsageCommand) Parse(configuration *todo.Configuration, args []string) error {
+func (usage UsageCommand) Parse(configuration *todo.Configuration, args []string) error {
 	return nil
 }
 
-func (usage *UsageCommand) Help() string {
+func (usage UsageCommand) Help() string {
 	return ""
 }

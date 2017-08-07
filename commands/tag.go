@@ -1,8 +1,8 @@
 package commands
 
 import (
-	"errors"
 	"github.com/gnumast/td/todo"
+	"errors"
 )
 
 type TagCommand struct {
@@ -21,6 +21,6 @@ func (tag *TagCommand) Run(configuration *todo.Configuration) error {
 	return errors.New("Not implemented")
 }
 
-func (tag *TagCommand) Help() string {
+func (tag TagCommand) Help() string {
 	return ""
 }

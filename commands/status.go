@@ -22,6 +22,6 @@ func (status *StatusCommand) Run(configuration *todo.Configuration) error {
 	return errors.New("Not implemented")
 }
 
-func (status *StatusCommand) Help() string {
+func (status StatusCommand) Help() string {
 	return ""
 }
