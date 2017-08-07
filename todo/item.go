@@ -1,8 +1,8 @@
 package todo
 
 import (
-	"time"
 	"encoding/json"
+	"time"
 )
 
 type Status int
