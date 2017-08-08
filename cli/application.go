@@ -1,7 +1,6 @@
-package todo
+package cli
 
 import (
-	"bufio"
 	"log"
 	"os"
 	"os/user"
@@ -9,10 +8,10 @@ import (
 )
 
 type Application struct {
-	GlobalFile     string        // Location of the global task list
-	CurrentWorkDir string        // Path where the program was executed from
-	CurrentGlobal  bool          // If the current command is global or local
-	Output         *bufio.Writer // Where the application will output
+	GlobalFile     string  // Location of the global task list
+	CurrentWorkDir string  // Path where the program was executed from
+	CurrentGlobal  bool    // If the current command is global or local
+	Output         *Output // Where the application will output
 }
 
 // NewApplication returns a struct containing settings we want to access across the entire program
@@ -20,7 +19,7 @@ func NewApplication() *Application {
 	return &Application{
 		GlobalFile:     globalFileLocation(),
 		CurrentWorkDir: getCurrentWorkDir(),
-		Output:         bufio.NewWriter(os.Stdout),
+		Output:         NewStdOuput(),
 	}
 }
 

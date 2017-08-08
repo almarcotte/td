@@ -2,22 +2,22 @@ package commands
 
 import (
 	"errors"
-	"github.com/gnumast/td/todo"
+	"github.com/gnumast/td/cli"
 )
 
 type TagCommand struct {
 	Tags []string
 }
 
-func (tag *TagCommand) Validate(app *todo.Application) error {
+func (tag *TagCommand) Validate(app *cli.Application) error {
 	return errors.New("Not implemented")
 }
 
-func (tag *TagCommand) Parse(app *todo.Application, args []string) error {
+func (tag *TagCommand) Parse(app *cli.Application, args []string) error {
 	return errors.New("Not implemented")
 }
 
-func (tag *TagCommand) Run(app *todo.Application) error {
+func (tag *TagCommand) Run(app *cli.Application) error {
 	return errors.New("Not implemented")
 }
 

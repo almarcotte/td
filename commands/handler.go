@@ -1,7 +1,7 @@
 package commands
 
 import (
-	"github.com/gnumast/td/todo"
+	"github.com/gnumast/td/cli"
 )
 
 const (
@@ -25,7 +25,7 @@ func NewHandler(args []string) *Handler {
 
 // Run tries to match the provided arguments with a command then asks it to parse / validate the rest of the arguments.
 // Finally the command is executed.
-func (h *Handler) Run(app *todo.Application) (output string, err error) {
+func (h *Handler) Run(app *cli.Application) (output string, err error) {
 	command := ParseForCommand(h.Args[0])
 
 	// Parsing error probably means missing arguments

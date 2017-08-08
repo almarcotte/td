@@ -1,11 +1,13 @@
 package commands
 
-import "github.com/gnumast/td/todo"
+import (
+	"github.com/gnumast/td/cli"
+)
 
 // Command represents a supported action that can parse command line arguments, validate them and run.
 type Command interface {
-	Run(*todo.Application) error
-	Validate(*todo.Application) error
-	Parse(*todo.Application, []string) error
+	Run(*cli.Application) error
+	Validate(*cli.Application) error
+	Parse(*cli.Application, []string) error
 	Help() string
 }

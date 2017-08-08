@@ -2,19 +2,18 @@ package main
 
 import (
 	"fmt"
+	"github.com/gnumast/td/cli"
 	"github.com/gnumast/td/commands"
-	"github.com/gnumast/td/todo"
 	"os"
 )
 
 func main() {
 	handler := commands.NewHandler(os.Args)
-	config := todo.NewApplication()
+	application := cli.NewApplication()
 
-	result, err := handler.Run(config)
+	result, err := handler.Run(application)
 
 	if err != nil {
-		fmt.Printf("Error! %v\n", err)
 		os.Exit(1)
 	}
 

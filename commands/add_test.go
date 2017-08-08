@@ -1,7 +1,7 @@
 package commands
 
 import (
-	"github.com/gnumast/td/todo"
+	"github.com/gnumast/td/cli"
 	"strings"
 	"testing"
 )
@@ -16,7 +16,7 @@ func TestAddCommand_Help(t *testing.T) {
 
 func TestAddCommand_ParseEmpty(t *testing.T) {
 	addCmd := AddCommand{}
-	conf := &todo.Application{}
+	conf := &cli.Application{}
 
 	err := addCmd.Parse(conf, []string{})
 
@@ -27,7 +27,7 @@ func TestAddCommand_ParseEmpty(t *testing.T) {
 
 func TestAddCommand_ParseDescriptionOnly(t *testing.T) {
 	addCmd := AddCommand{}
-	conf := &todo.Application{}
+	conf := &cli.Application{}
 	description := "write tests for td"
 
 	err := addCmd.Parse(conf, strings.Split(description, " "))
@@ -43,7 +43,7 @@ func TestAddCommand_ParseDescriptionOnly(t *testing.T) {
 
 func TestAddCommand_ParseDescriptionWithTags(t *testing.T) {
 	addCmd := AddCommand{}
-	conf := &todo.Application{}
+	conf := &cli.Application{}
 	description := "write tests for td"
 	full := description + " !golang !tdd"
 
@@ -77,7 +77,7 @@ func TestAddCommand_ParseMoreDateFormats(t *testing.T) {
 	}
 
 	for full, date := range checks {
-		addCmd.Parse(&todo.Application{}, strings.Split(full, " "))
+		addCmd.Parse(&cli.Application{}, strings.Split(full, " "))
 		if addCmd.Due != date {
 			t.Fatalf("Expected Due Date to be `%s`, got `%s`", date, addCmd.Due)
 		}
@@ -91,7 +91,7 @@ func TestAddCommand_ParseMoreDateFormats(t *testing.T) {
 func TestAddCommand_ValidateEmptyDescriptionIsInvalid(t *testing.T) {
 	addCmd := &AddCommand{}
 
-	if err := addCmd.Validate(&todo.Application{}); err == nil {
+	if err := addCmd.Validate(&cli.Application{}); err == nil {
 		t.Fatal("Expected empty description to return an error, got nil")
 	}
 }

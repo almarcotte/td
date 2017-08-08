@@ -2,7 +2,7 @@ package commands
 
 import (
 	"fmt"
-	"github.com/gnumast/td/todo"
+	"github.com/gnumast/td/cli"
 	"runtime"
 )
 
@@ -12,17 +12,17 @@ const (
 
 type VersionCommand struct{}
 
-func (vers VersionCommand) Run(configuration *todo.Application) error {
+func (vers VersionCommand) Run(app *cli.Application) error {
 	fmt.Printf("td version %s %s/%s\n", VERSION, runtime.GOOS, runtime.GOARCH)
 
 	return nil
 }
 
-func (vers VersionCommand) Parse(configuration *todo.Application, args []string) error {
+func (vers VersionCommand) Parse(app *cli.Application, args []string) error {
 	return nil
 }
 
-func (vers VersionCommand) Validate(configuration *todo.Application) error {
+func (vers VersionCommand) Validate(app *cli.Application) error {
 	return nil
 }
 
