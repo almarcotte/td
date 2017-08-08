@@ -1,5 +1,7 @@
 # td - cli todo
 
+[![Build Status](https://travis-ci.org/gnumast/td.svg?branch=master)](https://travis-ci.org/gnumast/td)
+
 `td` is a command-line todo / task management app that allows adding tasks on a per-project basis or globally. Project
 task lists are stored in a specific folder on disk whereas the global list is typically stored in the user's home
 directory.
