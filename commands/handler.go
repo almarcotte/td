@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gnumast/td/cli"
+	"strings"
 )
 
 const (
@@ -14,7 +15,6 @@ const (
 	tagCmd      = "t"
 	listCmd     = "ls"
 	versionCmd  = "version"
-	usageCmd    = ""
 )
 
 type Handler struct {
@@ -60,7 +60,7 @@ func (h *Handler) Run(app *cli.Application) (err error) {
 // parseArgsForCommand receives the first argument passed via the command line and returns the appropriate command
 func ParseForCommand(arg string) (cmd Command, err error) {
 	// This feels a bit messy, maybe there's a better way to do this..?
-	switch arg {
+	switch strings.ToLower(arg) {
 	case addCmd:
 		cmd = &AddCommand{}
 	case completeCmd:
