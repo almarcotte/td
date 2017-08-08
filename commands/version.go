@@ -14,7 +14,7 @@ const (
 type VersionCommand struct{}
 
 func (vers VersionCommand) Run(app *cli.Application) (err error) {
-	app.Output.Write(fmt.Sprintf(VERSION_FORMAT, VERSION, runtime.GOOS, runtime.GOARCH))
+	app.CliOutput.Write(fmt.Sprintf(VERSION_FORMAT, VERSION, runtime.GOOS, runtime.GOARCH))
 
 	return
 }

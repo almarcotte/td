@@ -9,7 +9,7 @@ func TestUsageCommand_Run(t *testing.T) {
 	usageCmd := UsageCommand{}
 	output, stdOutBuffer, _ := cli.NewTestOutput()
 
-	usageCmd.Run(&cli.Application{Output: output})
+	usageCmd.Run(&cli.Application{CliOutput: output})
 
 	expected := USAGE_OUTPUT + "\n"
 
@@ -28,7 +28,7 @@ func TestUsageCommand_RunThroughHandler(t *testing.T) {
 
 	for _, handler := range handlers {
 		output, stdOutBuffer, _ := cli.NewTestOutput()
-		handler.Run(&cli.Application{Output: output})
+		handler.Run(&cli.Application{CliOutput: output})
 
 		if result := stdOutBuffer.String(); result != expected {
 			t.Fatalf("Expected `%s`, got `%s`", expected, result)

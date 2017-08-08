@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"bufio"
 	"log"
 	"os"
 	"os/user"
@@ -8,10 +9,11 @@ import (
 )
 
 type Application struct {
-	GlobalFile     string  // Location of the global task list
-	CurrentWorkDir string  // Path where the program was executed from
-	CurrentGlobal  bool    // If the current command is global or local
-	Output         *Output // Where the application will output
+	GlobalFile     string            // Location of the global task list
+	CurrentWorkDir string            // Path where the program was executed from
+	CurrentGlobal  bool              // If the current command is global or local
+	CliOutput      *Writer           // Where the application will output when writing to the console (stdout/stderr)
+	CurrentFile    *bufio.ReadWriter // File we're currently working with, need to read and write to it
 }
 
 // NewApplication returns a struct containing settings we want to access across the entire program
@@ -19,7 +21,7 @@ func NewApplication() *Application {
 	return &Application{
 		GlobalFile:     globalFileLocation(),
 		CurrentWorkDir: getCurrentWorkDir(),
-		Output:         NewStdOutput(),
+		CliOutput:      NewStdOutput(),
 	}
 }
 

@@ -32,7 +32,7 @@ func (h *Handler) Run(app *cli.Application) (err error) {
 	command, err := h.ParseForCommand()
 
 	if err != nil {
-		app.Output.Error(err)
+		app.CliOutput.Error(err)
 	}
 
 	// Parsing error probably means missing arguments
@@ -51,7 +51,7 @@ func (h *Handler) Run(app *cli.Application) (err error) {
 
 	// Something went wrong while executing the command, hopefully this doesn't happen
 	if err = command.Run(app); err != nil {
-		app.Output.Error(err)
+		app.CliOutput.Error(err)
 	}
 
 	return

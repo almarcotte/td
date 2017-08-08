@@ -29,7 +29,7 @@ config        Lists configuration options`
 
 // Run displays the usage instruction
 func (usage *UsageCommand) Run(app *cli.Application) error {
-	app.Output.Write(USAGE_OUTPUT)
+	app.CliOutput.Write(USAGE_OUTPUT)
 
 	return nil
 }

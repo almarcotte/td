@@ -6,25 +6,25 @@ import (
 	"os"
 )
 
-type Output struct {
+type Writer struct {
 	StdOut *bufio.Writer
 	StdErr *bufio.Writer
 }
 
-// NewStdOutput returns an Output with stdout and stderr has its main outputs
-func NewStdOutput() *Output {
-	return &Output{
+// NewStdOutput returns an CliOutput with stdout and stderr has its main outputs
+func NewStdOutput() *Writer {
+	return &Writer{
 		StdOut: bufio.NewWriter(os.Stdout),
 		StdErr: bufio.NewWriter(os.Stderr),
 	}
 }
 
-// NewTestOutput returns an Output that can be used for testing. It also provides a bytes buffer for stdout and stderr
-func NewTestOutput() (*Output, *bytes.Buffer, *bytes.Buffer) {
+// NewTestOutput returns an CliOutput that can be used for testing. It also provides a bytes buffer for stdout and stderr
+func NewTestOutput() (*Writer, *bytes.Buffer, *bytes.Buffer) {
 	var stdOutBuffer bytes.Buffer
 	var stdErrBuffer bytes.Buffer
 
-	output := &Output{
+	output := &Writer{
 		StdOut: bufio.NewWriter(&stdOutBuffer),
 		StdErr: bufio.NewWriter(&stdErrBuffer),
 	}
@@ -33,7 +33,7 @@ func NewTestOutput() (*Output, *bytes.Buffer, *bytes.Buffer) {
 }
 
 // Write outputs a string to the standard output
-func (output *Output) Write(line string) (len int, err error) {
+func (output *Writer) Write(line string) (len int, err error) {
 	len, err = output.StdOut.WriteString(line + "\n")
 	output.StdOut.Flush()
 
@@ -41,7 +41,7 @@ func (output *Output) Write(line string) (len int, err error) {
 }
 
 // Error outputs an error message to the standard error output
-func (output *Output) Error(error error) (len int, err error) {
+func (output *Writer) Error(error error) (len int, err error) {
 	len, err = output.StdErr.WriteString(error.Error() + "\n")
 	output.StdErr.Flush()
 

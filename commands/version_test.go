@@ -11,7 +11,7 @@ func TestVersionCommand_Run(t *testing.T) {
 	versionCmd := VersionCommand{}
 	output, stdOutBuffer, _ := cli.NewTestOutput()
 
-	versionCmd.Run(&cli.Application{Output: output})
+	versionCmd.Run(&cli.Application{CliOutput: output})
 
 	expected := fmt.Sprintf(VERSION_FORMAT+"\n", VERSION, runtime.GOOS, runtime.GOARCH)
 
@@ -24,7 +24,7 @@ func TestVersionCommand_RunThroughHandler(t *testing.T) {
 	handler := NewHandler([]string{"td", "version"})
 	output, stdOutBuffer, _ := cli.NewTestOutput()
 
-	handler.Run(&cli.Application{Output: output})
+	handler.Run(&cli.Application{CliOutput: output})
 
 	expected := fmt.Sprintf(VERSION_FORMAT+"\n", VERSION, runtime.GOOS, runtime.GOARCH)
 

@@ -11,7 +11,7 @@ func TestAddCommand_Help(t *testing.T) {
 
 	// Create a fake Application with bytes buffer as output
 	output, stdOutBuffer, _ := cli.NewTestOutput()
-	app := &cli.Application{Output: output}
+	app := &cli.Application{CliOutput: output}
 
 	addCmd.Help(app)
 
@@ -100,4 +100,10 @@ func TestAddCommand_ValidateEmptyDescriptionIsInvalid(t *testing.T) {
 	if err := addCmd.Validate(&cli.Application{}); err == nil {
 		t.Fatal("Expected empty description to return an error, got nil")
 	}
+}
+
+func TestAddCommand_Run(t *testing.T) {
+	addCmd := &AddCommand{}
+	application := &cli.Application{}
+	addCmd.Run(application)
 }
