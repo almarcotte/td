@@ -14,8 +14,8 @@ type AddCommand struct {
 }
 
 const (
-	TAG_EX = `(![-\w]+)`
-	//DATE_EX = `(@today|@tomorrow|(@[\d]{2,4}-[\d]{2}-[\d]{2,4})|@next week)`
+	TAG_EX  = `(![-\w]+)`
+	DATE_EX = `(@today|@tomorrow|(@[\d]{2,4}-[\d]{2}-[\d]{2,4})|@next week)`
 )
 
 func (add *AddCommand) Run(conf *todo.Configuration) error {
@@ -34,28 +34,65 @@ func (add *AddCommand) Parse(conf *todo.Configuration, args []string) error {
 
 	full := strings.Join(args, " ")
 
-	exp, err := regexp.Compile(TAG_EX)
-
+	// Get the tags from all the arguments and remove from what we'll consider the description
+	description, tags, err := extractTags(full)
 	if err != nil {
-		return errors.New("Couldn't compile tag regex, this is likely a bug. Sorry")
+		return err
 	}
 
-	tagsResult := exp.FindAllString(full, -1)
-
-	description := full
-	tags := []string{}
-
-	for _, tag := range tagsResult {
-		description = strings.Replace(description, tag, "", -1)
-		tags = append(tags, strings.TrimLeft(tag, "!"))
-	}
-
-	add.Description = strings.Trim(description, " ")
 	add.Tags = tags
+
+	// Get the due date and remove it from all the arguments, leaving just the task description
+	description, dueDate, err := extractDueDate(description)
+	if err != nil {
+		return err
+	}
+
+	add.Due = dueDate
+
+	// Finally description is everything left after removing tags
+	add.Description = strings.Trim(description, " ")
 
 	return nil
 }
 
 func (add AddCommand) Help() string {
 	return ""
+}
+
+func extractTags(full string) (description string, tags []string, err error) {
+	exp, err := regexp.Compile(TAG_EX)
+
+	if err != nil {
+		return
+	}
+
+	description = full
+	tagsResult := exp.FindAllString(full, -1)
+
+	for _, tag := range tagsResult {
+		tags = append(tags, strings.TrimLeft(tag, "!"))
+		description = strings.Replace(description, tag, "", -1)
+	}
+
+	return
+}
+
+func extractDueDate(full string) (description string, dueDate string, err error) {
+	exp, err := regexp.Compile(DATE_EX)
+
+	if err != nil {
+		return
+	}
+
+	description = full
+	dateResult := exp.FindString(full)
+
+	if dateResult != "" {
+		description = strings.Replace(description, dateResult, "", 1)
+	}
+
+	dueDate = strings.TrimLeft(dateResult, "@")
+
+	return
 }
