@@ -87,3 +87,11 @@ func TestAddCommand_ParseMoreDateFormats(t *testing.T) {
 		}
 	}
 }
+
+func TestAddCommand_ValidateEmptyDescriptionIsInvalid(t *testing.T) {
+	addCmd := &AddCommand{}
+
+	if err := addCmd.Validate(&todo.Configuration{}); err == nil {
+		t.Fatal("Expected empty description to return an error, got nil")
+	}
+}

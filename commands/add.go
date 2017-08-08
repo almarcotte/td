@@ -22,8 +22,13 @@ func (add *AddCommand) Run(conf *todo.Configuration) error {
 	return errors.New("Not implemented")
 }
 
+// Validate validates the values parsed previously and returns an error if it encounters any issues
 func (add *AddCommand) Validate(conf *todo.Configuration) error {
-	return errors.New("Not implemented")
+	if add.Description == "" {
+		return errors.New("Description cannot be empty")
+	}
+
+	return nil
 }
 
 // Parse reads everything passed after the add command and tries to extract the description, due date and tags.
