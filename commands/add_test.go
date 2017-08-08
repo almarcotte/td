@@ -1,8 +1,6 @@
 package commands
 
 import (
-	"bufio"
-	"bytes"
 	"github.com/gnumast/td/cli"
 	"strings"
 	"testing"
@@ -11,13 +9,13 @@ import (
 func TestAddCommand_Help(t *testing.T) {
 	addCmd := AddCommand{}
 
-	// This will probably be used a lot, might be worth extracting it somewhere and make it reusable
-	var buf bytes.Buffer
-	app := &cli.Application{Output: cli.NewOutputWithWriter(bufio.NewWriter(&buf))}
+	// Create a fake Application with bytes buffer as output
+	output, stdOutBuffer, _ := cli.NewTestOutput()
+	app := &cli.Application{Output: output}
 
 	addCmd.Help(app)
 
-	if output := buf.String(); output != "" {
+	if output := stdOutBuffer.String(); output != "" {
 		t.Fatalf("Expected help to return ``, got %s", output)
 	}
 }
