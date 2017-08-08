@@ -23,13 +23,13 @@ type Handler struct {
 
 // NewHandler returns a new command handler
 func NewHandler(args []string) *Handler {
-	return &Handler{Args: args}
+	return &Handler{Args: args[1:]}
 }
 
 // Run tries to match the provided arguments with a command then asks it to parse / validate the rest of the arguments.
 // Finally the command is executed.
 func (h *Handler) Run(app *cli.Application) (err error) {
-	command, err := ParseForCommand(h.Args[0])
+	command, err := h.ParseForCommand()
 
 	if err != nil {
 		app.Output.Error(err)
@@ -58,8 +58,13 @@ func (h *Handler) Run(app *cli.Application) (err error) {
 }
 
 // parseArgsForCommand receives the first argument passed via the command line and returns the appropriate command
-func ParseForCommand(arg string) (cmd Command, err error) {
-	// This feels a bit messy, maybe there's a better way to do this..?
+func (h *Handler) ParseForCommand() (cmd Command, err error) {
+	arg := ""
+
+	if len(h.Args) > 0 {
+		arg = h.Args[0]
+	}
+
 	switch strings.ToLower(arg) {
 	case addCmd:
 		cmd = &AddCommand{}
