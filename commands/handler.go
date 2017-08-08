@@ -5,7 +5,6 @@ import (
 )
 
 const (
-	// All the commands are listing here
 	addCmd      = "a"
 	completeCmd = "c"
 	progressCmd = "p"
@@ -36,7 +35,7 @@ func (h *Handler) Run(conf *todo.Configuration) (output string, err error) {
 		return
 	}
 
-	// Validation error means the arguments were received don't make sense, such as removing a task that doesn't
+	// Validation error means the arguments were received don't make sense, such as removing a task that doesn't exist
 	if err = command.Validate(conf); err != nil {
 		return
 	}
