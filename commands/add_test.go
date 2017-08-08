@@ -1,7 +1,11 @@
 package commands
 
 import (
+	"bufio"
+	"bytes"
+	"github.com/gin-gonic/gin/json"
 	"github.com/gnumast/td/cli"
+	"github.com/gnumast/td/todo"
 	"strings"
 	"testing"
 )
@@ -103,7 +107,24 @@ func TestAddCommand_ValidateEmptyDescriptionIsInvalid(t *testing.T) {
 }
 
 func TestAddCommand_Run(t *testing.T) {
-	addCmd := &AddCommand{}
-	application := &cli.Application{}
+	t.SkipNow() // Skip for now
+
+	// Run() should convert an AddCommand to an Item and write it to disk
+	addCmd := &AddCommand{Description: "Buy some milk"}
+	item := todo.Item{Id: 1, Description: "Buy some milk", Status: todo.Incomplete} // This is what is expected
+
+	// The idea is to decouple writing to disk so it's testable, still trying to figure out best way to do this
+	var fileBuffer bytes.Buffer
+	application := &cli.Application{
+		CurrentFile: bufio.NewReadWriter(bufio.NewReader(&fileBuffer), bufio.NewWriter(&fileBuffer)),
+	}
+
 	addCmd.Run(application)
+
+	jsonContent, _ := json.Marshal(item)
+
+	// Expect the fileBuffer to have the json representation of the task
+	if fileContent, expected := fileBuffer.String(), string(jsonContent); fileContent != expected {
+		t.Fatalf("Expected %s, got %s", expected, fileContent)
+	}
 }
