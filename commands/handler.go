@@ -37,6 +37,8 @@ func (h *Handler) Run(app *todo.Application) (output string, err error) {
 
 	// Validation error means the arguments were received don't make sense, such as removing a task that doesn't exist
 	if err = command.Validate(app); err != nil {
+		output = command.Help()
+
 		return
 	}
 
