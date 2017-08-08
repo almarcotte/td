@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"errors"
+	"fmt"
 	"github.com/gnumast/td/cli"
 )
 
@@ -12,6 +14,7 @@ const (
 	tagCmd      = "t"
 	listCmd     = "ls"
 	versionCmd  = "version"
+	usageCmd    = ""
 )
 
 type Handler struct {
@@ -26,7 +29,11 @@ func NewHandler(args []string) *Handler {
 // Run tries to match the provided arguments with a command then asks it to parse / validate the rest of the arguments.
 // Finally the command is executed.
 func (h *Handler) Run(app *cli.Application) (err error) {
-	command := ParseForCommand(h.Args[0])
+	command, err := ParseForCommand(h.Args[0])
+
+	if err != nil {
+		app.Output.WriteString(err.Error())
+	}
 
 	// Parsing error probably means missing arguments
 	if err = command.Parse(app, h.Args); err != nil {
@@ -51,24 +58,29 @@ func (h *Handler) Run(app *cli.Application) (err error) {
 }
 
 // parseArgsForCommand receives the first argument passed via the command line and returns the appropriate command
-func ParseForCommand(arg string) Command {
+func ParseForCommand(arg string) (cmd Command, err error) {
 	// This feels a bit messy, maybe there's a better way to do this..?
 	switch arg {
 	case addCmd:
-		return &AddCommand{}
+		cmd = &AddCommand{}
 	case completeCmd:
-		return &StatusCommand{Flag: completeCmd}
+		cmd = &StatusCommand{Flag: completeCmd}
 	case progressCmd:
-		return &StatusCommand{Flag: progressCmd}
+		cmd = &StatusCommand{Flag: progressCmd}
 	case revertCmd:
-		return &StatusCommand{Flag: revertCmd}
+		cmd = &StatusCommand{Flag: revertCmd}
 	case tagCmd:
-		return &TagCommand{}
+		cmd = &TagCommand{}
 	case listCmd:
-		return &ListCommand{}
+		cmd = &ListCommand{}
 	case versionCmd:
-		return &VersionCommand{}
+		cmd = &VersionCommand{}
+	default:
+		cmd = &UsageCommand{}
+		if arg != "" {
+			err = errors.New(fmt.Sprintf("No such command `%s`", arg))
+		}
 	}
 
-	return &UsageCommand{}
+	return
 }

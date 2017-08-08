@@ -13,7 +13,6 @@ func main() {
 	err := handler.Run(application)
 
 	if err != nil {
-		application.Output.WriteString(err.Error())
 		os.Exit(1)
 	}
 }
