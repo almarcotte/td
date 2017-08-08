@@ -98,5 +98,9 @@ func TestAddCommand_ParseMoreDateFormats(t *testing.T) {
 		if addCmd.Due != date {
 			t.Fatalf("Expected Due Date to be `%s`, got `%s`", date, addCmd.Due)
 		}
+
+		if strings.Contains(addCmd.Description, date) {
+			t.Fatalf("Unexpected date found in description: `%s` shouldn't contain `%s`", addCmd.Description, date)
+		}
 	}
 }
