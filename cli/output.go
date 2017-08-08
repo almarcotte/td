@@ -32,14 +32,6 @@ func NewTestOutput() (*Output, *bytes.Buffer, *bytes.Buffer) {
 	return output, &stdOutBuffer, &stdErrBuffer
 }
 
-// NewOutputWithWriter returns an Output but allows specifying the outputs for stdin and stdout
-func NewOutputWithWriter(out *bufio.Writer, err *bufio.Writer) *Output {
-	return &Output{
-		StdOut: out,
-		StdErr: err,
-	}
-}
-
 // Write outputs a string to the standard output
 func (output *Output) Write(line string) (len int, err error) {
 	len, err = output.StdOut.WriteString(line)
