@@ -66,23 +66,6 @@ func TestAddCommand_ParseDescriptionWithTags(t *testing.T) {
 	}
 }
 
-func TestAddCommand_ParseDescriptionWithDueDate(t *testing.T) {
-	addCmd := AddCommand{}
-	conf := &todo.Configuration{}
-	description := "write tests for td"
-	full := description + " @tomorrow"
-
-	addCmd.Parse(conf, strings.Split(full, " "))
-
-	if addCmd.Description != description {
-		t.Fatalf("Expected description to be `%s`, got `%s`", description, addCmd.Description)
-	}
-
-	if addCmd.Due != "tomorrow" {
-		t.Fatalf("Expected due date to be `tomorrow`, got %s", addCmd.Due)
-	}
-}
-
 func TestAddCommand_ParseMoreDateFormats(t *testing.T) {
 	addCmd := AddCommand{}
 	checks := map[string]string{
