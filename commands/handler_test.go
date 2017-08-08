@@ -28,7 +28,7 @@ func TestParseForCommand(t *testing.T) {
 	}
 
 	for arg, cmd := range expected {
-		if created := ParseForCommand(arg); fmt.Sprintf("%T", created) != cmd {
+		if created, err := ParseForCommand(arg); fmt.Sprintf("%T", created) != cmd || err != nil {
 			t.Fatalf("Expected `%s` to create %s, created %+v", arg, cmd, fmt.Sprintf("%T", created))
 		}
 	}
