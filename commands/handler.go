@@ -51,7 +51,7 @@ func (h *Handler) Run(app *cli.Application) (err error) {
 
 	// Something went wrong while executing the command, hopefully this doesn't happen
 	if err = command.Run(app); err != nil {
-		return
+		app.Output.Error(err)
 	}
 
 	return
