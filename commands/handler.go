@@ -29,11 +29,13 @@ func NewHandler(args []string) *Handler {
 // Run tries to match the provided arguments with a command then asks it to parse / validate the rest of the arguments.
 // Finally the command is executed.
 func (h *Handler) Run(app *cli.Application) (err error) {
-	command, err := h.ParseForCommand()
+	command, isGlobal, err := h.ParseForCommand()
 
 	if err != nil {
 		app.CliOutput.Error(err)
 	}
+
+	app.CurrentGlobal = isGlobal
 
 	// Parsing error probably means missing arguments
 	if err = command.Parse(app, h.Args); err != nil {
@@ -58,8 +60,9 @@ func (h *Handler) Run(app *cli.Application) (err error) {
 }
 
 // parseArgsForCommand receives the first argument passed via the command line and returns the appropriate command
-func (h *Handler) ParseForCommand() (cmd Command, err error) {
+func (h *Handler) ParseForCommand() (cmd Command, isGlobal bool, err error) {
 	arg := ""
+	isGlobal = false
 
 	if len(h.Args) > 0 {
 		arg = h.Args[0]
