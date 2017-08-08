@@ -8,15 +8,15 @@ import (
 type FindCommand struct {
 }
 
-func (find *FindCommand) Run(conf *todo.Configuration) error {
+func (find *FindCommand) Run(app *todo.Application) error {
 	return errors.New("Not implemented")
 }
 
-func (find *FindCommand) Validate(conf *todo.Configuration) error {
+func (find *FindCommand) Validate(app *todo.Application) error {
 	return errors.New("Not implemented")
 }
 
-func (find *FindCommand) Parse(conf *todo.Configuration, args []string) error {
+func (find *FindCommand) Parse(app *todo.Application, args []string) error {
 	return errors.New("Not implemented")
 }
 

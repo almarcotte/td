@@ -18,12 +18,12 @@ const (
 	DATE_EX = `(@today|@tomorrow|(@[\d]{2,4}-[\d]{2}-[\d]{2,4})|@next week)`
 )
 
-func (add *AddCommand) Run(conf *todo.Configuration) error {
+func (add *AddCommand) Run(app *todo.Application) error {
 	return errors.New("Not implemented")
 }
 
 // Validate validates the values parsed previously and returns an error if it encounters any issues
-func (add *AddCommand) Validate(conf *todo.Configuration) error {
+func (add *AddCommand) Validate(app *todo.Application) error {
 	if add.Description == "" {
 		return errors.New("Description cannot be empty")
 	}
@@ -32,7 +32,7 @@ func (add *AddCommand) Validate(conf *todo.Configuration) error {
 }
 
 // Parse reads everything passed after the add command and tries to extract the description, due date and tags.
-func (add *AddCommand) Parse(conf *todo.Configuration, args []string) error {
+func (add *AddCommand) Parse(app *todo.Application, args []string) error {
 	if len(args) == 0 {
 		return errors.New("Missing argument for add command")
 	}

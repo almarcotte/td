@@ -7,15 +7,15 @@ import (
 	"path/filepath"
 )
 
-type Configuration struct {
+type Application struct {
 	GlobalFile     string // Location of the global task list
 	CurrentWorkDir string // Path where the program was executed from
 	CurrentGlobal  bool   // If the current command is global or local
 }
 
-// NewConfiguration returns a struct containing settings we want to access across the entire program
-func NewConfiguration() *Configuration {
-	return &Configuration{
+// NewApplication returns a struct containing settings we want to access across the entire program
+func NewApplication() *Application {
+	return &Application{
 		GlobalFile:     globalFileLocation(),
 		CurrentWorkDir: getCurrentWorkDir(),
 	}

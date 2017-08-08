@@ -10,15 +10,15 @@ type StatusCommand struct {
 	Status todo.Status
 }
 
-func (status *StatusCommand) Validate(configuration *todo.Configuration) error {
+func (status *StatusCommand) Validate(app *todo.Application) error {
 	return errors.New("Not implemented")
 }
 
-func (status *StatusCommand) Parse(configuration *todo.Configuration, args []string) error {
+func (status *StatusCommand) Parse(app *todo.Application, args []string) error {
 	return errors.New("Not implemented")
 }
 
-func (status *StatusCommand) Run(configuration *todo.Configuration) error {
+func (status *StatusCommand) Run(app *todo.Application) error {
 	return errors.New("Not implemented")
 }
 

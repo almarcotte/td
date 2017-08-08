@@ -9,7 +9,7 @@ import (
 
 func main() {
 	handler := commands.NewHandler(os.Args)
-	config := todo.NewConfiguration()
+	config := todo.NewApplication()
 
 	result, err := handler.Run(config)
 
