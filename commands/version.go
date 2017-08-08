@@ -7,24 +7,28 @@ import (
 )
 
 const (
-	VERSION = "0.0.1"
+	VERSION        = "0.0.1"
+	VERSION_FORMAT = "td version %s %s/%s"
 )
 
 type VersionCommand struct{}
 
-func (vers VersionCommand) Run(app *cli.Application) error {
-	fmt.Printf("td version %s %s/%s\n", VERSION, runtime.GOOS, runtime.GOARCH)
+func (vers VersionCommand) Run(app *cli.Application) (err error) {
+	app.Output.Write(fmt.Sprintf(VERSION_FORMAT, VERSION, runtime.GOOS, runtime.GOARCH))
 
-	return nil
+	return
 }
 
-func (vers VersionCommand) Parse(app *cli.Application, args []string) error {
-	return nil
+// Parse does nothing for this command
+func (vers VersionCommand) Parse(app *cli.Application, args []string) (err error) {
+	return
 }
 
-func (vers VersionCommand) Validate(app *cli.Application) error {
-	return nil
+// Validate does nothing for this command
+func (vers VersionCommand) Validate(app *cli.Application) (err error) {
+	return
 }
 
+// Help does nothing for this command
 func (vers *VersionCommand) Help(app *cli.Application) {
 }
