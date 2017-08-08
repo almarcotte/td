@@ -25,19 +25,19 @@ func NewHandler(args []string) *Handler {
 
 // Run tries to match the provided arguments with a command then asks it to parse / validate the rest of the arguments.
 // Finally the command is executed.
-func (h *Handler) Run(app *cli.Application) (output string, err error) {
+func (h *Handler) Run(app *cli.Application) (err error) {
 	command := ParseForCommand(h.Args[0])
 
 	// Parsing error probably means missing arguments
 	if err = command.Parse(app, h.Args); err != nil {
-		output = command.Help()
+		command.Help(app)
 
 		return
 	}
 
 	// Validation error means the arguments were received don't make sense, such as removing a task that doesn't exist
 	if err = command.Validate(app); err != nil {
-		output = command.Help()
+		command.Help(app)
 
 		return
 	}

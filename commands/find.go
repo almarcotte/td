@@ -20,6 +20,5 @@ func (find *FindCommand) Parse(app *cli.Application, args []string) error {
 	return errors.New("Not implemented")
 }
 
-func (find FindCommand) Help() string {
-	return ""
+func (find *FindCommand) Help(app *cli.Application) {
 }

@@ -48,6 +48,5 @@ func (usage UsageCommand) Parse(configuration *cli.Application, args []string) e
 	return nil
 }
 
-func (usage UsageCommand) Help() string {
-	return ""
+func (usage *UsageCommand) Help(app *cli.Application) {
 }

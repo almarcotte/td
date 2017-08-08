@@ -23,6 +23,5 @@ func (status *StatusCommand) Run(app *cli.Application) error {
 	return errors.New("Not implemented")
 }
 
-func (status StatusCommand) Help() string {
-	return ""
+func (status *StatusCommand) Help(app *cli.Application) {
 }

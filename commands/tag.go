@@ -21,6 +21,5 @@ func (tag *TagCommand) Run(app *cli.Application) error {
 	return errors.New("Not implemented")
 }
 
-func (tag TagCommand) Help() string {
-	return ""
+func (tag *TagCommand) Help(app *cli.Application) {
 }

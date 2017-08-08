@@ -9,5 +9,5 @@ type Command interface {
 	Run(*cli.Application) error
 	Validate(*cli.Application) error
 	Parse(*cli.Application, []string) error
-	Help() string
+	Help(*cli.Application)
 }

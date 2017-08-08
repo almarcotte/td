@@ -19,6 +19,5 @@ func (list *ListCommand) Run(app *cli.Application) error {
 	return errors.New("Not implemented")
 }
 
-func (list ListCommand) Help() string {
-	return ""
+func (list *ListCommand) Help(app *cli.Application) {
 }

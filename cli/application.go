@@ -19,7 +19,7 @@ func NewApplication() *Application {
 	return &Application{
 		GlobalFile:     globalFileLocation(),
 		CurrentWorkDir: getCurrentWorkDir(),
-		Output:         NewStdOuput(),
+		Output:         NewStdOutput(),
 	}
 }
 

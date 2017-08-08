@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"bufio"
+	"bytes"
 	"github.com/gnumast/td/cli"
 	"strings"
 	"testing"
@@ -9,16 +11,22 @@ import (
 func TestAddCommand_Help(t *testing.T) {
 	addCmd := AddCommand{}
 
-	if output := addCmd.Help(); output != "" {
-		t.Fatalf("Expected `` from Help(), got %s", output)
+	// This will probably be used a lot, might be worth extracting it somewhere and make it reusable
+	var buf bytes.Buffer
+	app := &cli.Application{Output: cli.NewOutputWithWriter(bufio.NewWriter(&buf))}
+
+	addCmd.Help(app)
+
+	if output := buf.String(); output != "" {
+		t.Fatalf("Expected help to return ``, got %s", output)
 	}
 }
 
 func TestAddCommand_ParseEmpty(t *testing.T) {
 	addCmd := AddCommand{}
-	conf := &cli.Application{}
+	app := &cli.Application{}
 
-	err := addCmd.Parse(conf, []string{})
+	err := addCmd.Parse(app, []string{})
 
 	if err == nil {
 		t.Fatal("Expected error when parsing empty string, got nil")
@@ -27,10 +35,10 @@ func TestAddCommand_ParseEmpty(t *testing.T) {
 
 func TestAddCommand_ParseDescriptionOnly(t *testing.T) {
 	addCmd := AddCommand{}
-	conf := &cli.Application{}
+	app := &cli.Application{}
 	description := "write tests for td"
 
-	err := addCmd.Parse(conf, strings.Split(description, " "))
+	err := addCmd.Parse(app, strings.Split(description, " "))
 
 	if err != nil {
 		t.Fatalf("Unexpected error when parsing: %s", err.Error())
@@ -43,11 +51,11 @@ func TestAddCommand_ParseDescriptionOnly(t *testing.T) {
 
 func TestAddCommand_ParseDescriptionWithTags(t *testing.T) {
 	addCmd := AddCommand{}
-	conf := &cli.Application{}
+	app := &cli.Application{}
 	description := "write tests for td"
 	full := description + " !golang !tdd"
 
-	err := addCmd.Parse(conf, strings.Split(full, " "))
+	err := addCmd.Parse(app, strings.Split(full, " "))
 
 	if err != nil {
 		t.Fatalf("Unexpected error when parsing: %s", err.Error())

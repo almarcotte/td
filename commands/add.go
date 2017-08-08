@@ -61,8 +61,7 @@ func (add *AddCommand) Parse(app *cli.Application, args []string) error {
 	return nil
 }
 
-func (add AddCommand) Help() string {
-	return ""
+func (add *AddCommand) Help(app *cli.Application) {
 }
 
 func extractTags(full string) (description string, tags []string, err error) {

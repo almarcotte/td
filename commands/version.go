@@ -26,6 +26,5 @@ func (vers VersionCommand) Validate(app *cli.Application) error {
 	return nil
 }
 
-func (vers VersionCommand) Help() string {
-	return ""
+func (vers *VersionCommand) Help(app *cli.Application) {
 }

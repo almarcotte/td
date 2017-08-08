@@ -10,8 +10,12 @@ type Output struct {
 	*bufio.Writer
 }
 
-func NewStdOuput() *Output {
+func NewStdOutput() *Output {
 	return &Output{bufio.NewWriter(os.Stdout)}
+}
+
+func NewOutputWithWriter(writer *bufio.Writer) *Output {
+	return &Output{writer}
 }
 
 func (output *Output) WriteLine(line string) (int, error) {
