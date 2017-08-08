@@ -82,3 +82,21 @@ func TestAddCommand_ParseDescriptionWithDueDate(t *testing.T) {
 		t.Fatalf("Expected due date to be `tomorrow`, got %s", addCmd.Due)
 	}
 }
+
+func TestAddCommand_ParseMoreDateFormats(t *testing.T) {
+	addCmd := AddCommand{}
+	checks := map[string]string{
+		"write tests for td @tomorrow":    "tomorrow",
+		"buy milk @today":                 "today",
+		"do groceries @next week":         "next week",
+		"buy christmas gifts @23-12-2017": "23-12-2017",
+		"buy christmas gifts @2017-12-23": "2017-12-23",
+	}
+
+	for full, date := range checks {
+		addCmd.Parse(&todo.Configuration{}, strings.Split(full, " "))
+		if addCmd.Due != date {
+			t.Fatalf("Expected Due Date to be `%s`, got `%s`", date, addCmd.Due)
+		}
+	}
+}
