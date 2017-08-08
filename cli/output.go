@@ -34,7 +34,7 @@ func NewTestOutput() (*Output, *bytes.Buffer, *bytes.Buffer) {
 
 // Write outputs a string to the standard output
 func (output *Output) Write(line string) (len int, err error) {
-	len, err = output.StdOut.WriteString(line)
+	len, err = output.StdOut.WriteString(line + "\n")
 	output.StdOut.Flush()
 
 	return
@@ -42,7 +42,7 @@ func (output *Output) Write(line string) (len int, err error) {
 
 // Error outputs an error message to the standard error output
 func (output *Output) Error(error error) (len int, err error) {
-	len, err = output.StdErr.WriteString(error.Error())
+	len, err = output.StdErr.WriteString(error.Error() + "\n")
 	output.StdErr.Flush()
 
 	return
